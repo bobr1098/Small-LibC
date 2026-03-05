@@ -171,6 +171,7 @@ UBSAN_HANDLER_3(mul_overflow, "multiplication overflow")
 UBSAN_HANDLER_3(divrem_overflow, "division/remainder by zero or overflow")
 UBSAN_HANDLER_3(shift_out_of_bounds, "shift out of bounds")
 UBSAN_HANDLER_3(pointer_overflow, "pointer overflow")
+UBSAN_HANDLER_3(implicit_conversion, "implicit conversion")
 
 UBSAN_HANDLER_2(negate_overflow, "negation overflow")
 UBSAN_HANDLER_2(out_of_bounds, "index out of bounds")
