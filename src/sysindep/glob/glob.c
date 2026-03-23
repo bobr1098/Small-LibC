@@ -7,7 +7,7 @@
 #include <errno.h>
 
 static int compare_paths(const void *a, const void *b) {
-    return strcoll(*(const char **)a, *(const char **)b);
+    return strcoll(*(const char **)(uintptr_t)a, *(const char **)(uintptr_t)b);
 }
 
 static int append_match(glob_t *pglob, const char *match, int flags) {
@@ -67,7 +67,7 @@ static int glob_internal(const char *dir, const char *pattern, int flags, int (*
         p++;
     }
     
-    size_t seg_len = p - pattern;
+    size_t seg_len = (size_t)(p - pattern);
     char *segment = malloc(seg_len + 1);
     if (!segment) return GLOB_NOSPACE;
     memcpy(segment, pattern, seg_len);
@@ -76,7 +76,7 @@ static int glob_internal(const char *dir, const char *pattern, int flags, int (*
     const char *next_pattern = p;
     while (*next_pattern == '/') next_pattern++;
     int has_slash = (next_pattern > p);
-    size_t slash_len = next_pattern - p;
+    size_t slash_len = (size_t)(next_pattern - p);
     
     char *slashes = malloc(slash_len + 1);
     if (!slashes) { free(segment); return GLOB_NOSPACE; }
@@ -188,7 +188,7 @@ int glob(const char *pattern, int flags, int (*errfunc)(const char *, int), glob
     
     const char *p = pattern;
     while (*p == '/') p++;
-    size_t lead_slashes = p - pattern;
+    size_t lead_slashes = (size_t)(p - pattern);
     
     if (lead_slashes > 0) {
         char *root = malloc(lead_slashes + 1);

@@ -42,8 +42,6 @@ Actually, it should be named "c", not "sysindep", but I don't want to change it 
 
 TL;DR: no, it's not.
 
-The only thing must be compatible is runtime and it is - support for ANY arch is garanteed. 
-
 (Actually, this library can be used with libSystem if you'll remove `./src/sysindep/stdio` – it's incompatible)
 
 ### Is dynamic linking supported?
@@ -52,21 +50,11 @@ TL;DR: no
 
 And never be - dyld is complicated as hell. Sorry! T-T
 
-And of course it can't replace libSystem
+### Is it thread-safe?
 
-### Is it thread-safe? What about pthreads?
-
-TL;DR: malloc and stdio are safe. libmach is required for pthreads and of course isn't implemented
+TL;DR: partly
 
 `*alloc()`, `free()`, stdio functions are protected with spinlocks.
 
-### Is it stable?
-
-TL;DR: I think so
-
-Of course, it's not 100% tested, but this project passes `-Weverything -Werror` with clang-7!
-
-About ABI stability – no, it's not: actually, this library is not stable at all, because it's WIP
-
-### Other standarts status & Feature test macros
-We support some feature test macros, such aa `_ANSI_SOURCE`, `_XOPEN_SOURCE`, `_POSIX_C_SOURCE`, `_DARWIN_C_SOURCE`, `_GNU_SOURCE`, but only `_POSIX_C_SOURCE=1` is explicitly supported.
+### Other standarts status & Feature test macro
+We support some feature test macros, such aa `_ANSI_SOURCE`, `_XOPEN_SOURCE`, `_POSIX_C_SOURCE`, `_DARWIN_C_SOURCE`, `_GNU_SOURCE`, but only `_POSIX_SOURCE` and `_ANSI_SOURCE` are explicitly supported.
