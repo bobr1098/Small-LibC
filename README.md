@@ -12,24 +12,25 @@ If you're cross-compiling, go to ./src, then `make CROSS=1`. Supported Makefile 
 ## Status
 * Full ANSI C89
 * Full POSIX.1-1990
+* Full POSIX.2-1992
 * Some Mach syscalls implemented with libMach. To compile it (required for stdio), use `./getlibmach.sh`. It's very small.
 * ANSI requires support for "C" locale only, which this library does. You can find Apple `LC_CTYPE` parser at `./src/sysindep/locale/unused`
-* Some C99 is implemented (very partly) – e.g. you can use `%ls` and `%lc` and `snprintf()`
+* Some C99, POSIX.2008 and GNU extensions are implemented (very partly) – e.g. you can use `%ls` and `%lc`, `snprintf()`, `dprintf()`, `getline()`, and various C99 math functions.
 
-Note that LibM and string are git submodules, so run git submodule update --recursive --init before compiling (of course, if you need it. if don't, just `touch src/math/dummy.c` and it will pass)
+Note that LibM and string are git submodules, so run `git submodule update --recursive --init` before compiling (of course, if you need it. if don't, just `touch src/math/dummy.c` and it will pass)
 
 ## License
 This project is a Public Domain and licensed under The Unlicense. Note that 570161d commit and older are MIT-licensed
  
 ## Structure
 
-1. ./src – LibC's source
-2. ./include – LibC's headers (some `sys` licensed under APSL, be careful!)
-3. ./src/sysindep – Probably system-independent code
-4. ./src/sysdep – "system-dependent" code: uses inline asm. can be used like `xnu-tree/libsyscall/custom`
-5. ./src/runtime/sysdep – C Startup code
-6. ./src/runtime/sysindep – stack canary, division runtime
-7. ./src/math – libM
+1. `./src` – LibC's source
+2. `./include` – LibC's headers
+3. `./src/sysindep` – Probably system-independent code
+4. `./src/sysdep` – "system-dependent" code: uses inline asm. can be used like `xnu-tree/libsyscall/custom`
+5. `./src/runtime/sysdep` – C Startup code and UBSan runtime
+6. `./src/runtime/sysindep` – stack canary, division runtime
+7. `./src/math` – libM
 
 ## Notes
 ### Why sysindep is "probably" system-independent?
@@ -57,4 +58,4 @@ TL;DR: partly
 `*alloc()`, `free()`, stdio functions are protected with spinlocks.
 
 ### Other standarts status & Feature test macro
-We support some feature test macros, such aa `_ANSI_SOURCE`, `_XOPEN_SOURCE`, `_POSIX_C_SOURCE`, `_DARWIN_C_SOURCE`, `_GNU_SOURCE`, but only `_POSIX_SOURCE` and `_ANSI_SOURCE` are explicitly supported.
+We support some feature test macros, such as `_ANSI_SOURCE`, `_XOPEN_SOURCE`, `_POSIX_C_SOURCE`, `_DARWIN_C_SOURCE`, `_GNU_SOURCE`, but only `_POSIX_SOURCE` and `_ANSI_SOURCE` are explicitly supported.

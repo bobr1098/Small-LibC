@@ -17,6 +17,17 @@
 #define _POSIX_NO_TRUNC 1
 #define _POSIX_VDISABLE ((unsigned char)'\377')
 
+#if _POSIX_C_SOURCE >= 2
+#define _POSIX2_C_VERSION 199209L
+#define _POSIX2_C_DEV -1
+#define _POSIX2_CHAR_TERM 1
+#define _POSIX2_FORT_DEV -1
+#define _POSIX2_FORT_RUN -1
+#define _POSIX2_LOCALEDEF -1
+#define _POSIX2_SW_DEV -1
+#define _POSIX2_UPE -1
+#endif /* _POSIX_C_SOURCE >= 2 */
+
 #define STDIN_FILENO 0
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
@@ -210,6 +221,6 @@ long syscall7(long number, long arg1, long arg2, long arg3, long arg4, long arg5
 long syscall8(long number, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6, long arg7, long arg8);
 #endif /* _DARWIN_C_SOURCE || _GNU_SOURCE */
 
-#endif /* !_ANSI */
+#endif /* !_ANSI && _POSIX_C_SOURCE */
 
 #endif /* !UNISTD_H */

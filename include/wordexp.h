@@ -1,6 +1,10 @@
 #ifndef WORDEXP_H
 #define WORDEXP_H
 
+#include <features.h>
+
+#if !defined(_ANSI) && (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 2)
+
 #include <stddef.h>
 
 #define WRDE_APPEND   (1 << 0)
@@ -24,5 +28,7 @@ typedef struct {
 
 int wordexp(const char *restrict, wordexp_t *restrict, int);
 void wordfree(wordexp_t *);
+
+#endif /* !_ANSI && (_POSIX_C_SOURCE && _POSIX_C_SOURCE >= 2) */
 
 #endif /* !WORDEXP_H */
