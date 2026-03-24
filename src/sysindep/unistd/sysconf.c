@@ -144,7 +144,7 @@ long sysconf(int name) {
         return 255;
 
     case _SC_ASYNCHRONOUS_IO:
-        return -1;
+        return 1;
 
     case _SC_PAGESIZE:
         mib[0] = CTL_HW;

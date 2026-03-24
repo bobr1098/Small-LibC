@@ -28,6 +28,10 @@
 #define _POSIX2_UPE -1
 #endif /* _POSIX_C_SOURCE >= 2 */
 
+#if _POSIX_C_SOURCE >= 199309L
+#define _POSIX_SYNCHRONIZED_IO 1
+#endif /* _POSIX_C_SOURCE >= 199309L */
+
 #define STDIN_FILENO 0
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2

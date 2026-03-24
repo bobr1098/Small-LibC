@@ -114,6 +114,18 @@ typedef struct siginfo {
     long    si_band;
     unsigned long   __pad[7];
 } siginfo_t;
+
+#define	SIGEV_NONE 0
+#define	SIGEV_SIGNAL 1
+
+struct sigevent {
+     int sigev_notify;
+     int sigev_signo;
+     union sigval sigev_value;
+     void (*sigev_notify_function)(union sigval);
+     void *pth_data;
+};
+
 #endif /* !_ANSI && (_DARWIN_C_SOURCE || (_XOPEN_SOURCE && _XOPEN_SOURCE >= 500) || (_POSIX_C_SOURCE && _POSIX_C_SOURCE >= 199309L)) */
 
 #if !defined(_ANSI) && (defined(_DARWIN_C_SOURCE) || defined(_POSIX_C_SOURCE) || defined(_XOPEN_SOURCE))

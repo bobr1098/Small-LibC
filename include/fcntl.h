@@ -21,6 +21,10 @@
 #define O_NOCTTY 0x20000
 #define FD_CLOEXEC 1
 
+#if _POSIX_C_SOURCE >= 199309L 
+# define O_SYNC 0x0080
+#endif /* _POSIX_C_SOURCE >= 199309L */
+
 #if _POSIX_C_SOURCE >= 200809L
 # define O_DIRECTORY 0x100000
 #endif /* _POSIX_C_SOURCE >= 200809L */

@@ -2,6 +2,5 @@
 #include <unistd.h>
 
 int unlink(const char *path) {
-    long res = syscall(SYS_unlink, (long)path);
-    return (int)res;
+    return (int)syscall(SYS_unlink, (long)path);
 }
