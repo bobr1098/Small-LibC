@@ -34,7 +34,7 @@ static Ctx emit(Ctx c, AstOp op, int v1, int v2, int left, int right) {
     c.prog[c.len].v2 = v2;
     c.prog[c.len].left = left;
     c.prog[c.len].right = right;
-    c.ret = c.len;
+    c.ret = ((int)c.len);
     c.len++;
     return c;
 }
@@ -128,7 +128,7 @@ static Ctx parse_bracket(Ctx c) {
         return c;
     }
 
-    c = emit(c, AST_BRACKET, start, c.pos, -1, -1);
+    c = emit(c, AST_BRACKET, (int)start, ((int)c.pos), -1, -1);
     c.pos++;
     return c;
 }
@@ -198,7 +198,8 @@ static Ctx apply_bounds(Ctx c, int node, int min, int max) {
         if(root == -1)
             root = copy;
         else
-            c = emit(c, AST_CONCAT, 0, 0, root, copy), root = c.ret;
+            c = emit(c, AST_CONCAT, 0, 0, root, copy);
+        root = c.ret;
     }
 
     if(max == -1) {
@@ -208,7 +209,8 @@ static Ctx apply_bounds(Ctx c, int node, int min, int max) {
         if(root == -1)
             root = c.ret;
         else
-            c = emit(c, AST_CONCAT, 0, 0, root, c.ret), root = c.ret;
+            c = emit(c, AST_CONCAT, 0, 0, root, c.ret);
+        root = c.ret;
     } else {
         for(int i = min; i < max; i++) {
             int copy;
@@ -219,7 +221,8 @@ static Ctx apply_bounds(Ctx c, int node, int min, int max) {
             if(root == -1)
                 root = c.ret;
             else
-                c = emit(c, AST_CONCAT, 0, 0, root, c.ret), root = c.ret;
+                c = emit(c, AST_CONCAT, 0, 0, root, c.ret);
+            root = c.ret;
         }
     }
 
@@ -359,7 +362,8 @@ static Ctx compile_bre(Ctx c) {
         if(root == -1)
             root = c.ret;
         else
-            c = emit(c, AST_CONCAT, 0, 0, root, c.ret), root = c.ret;
+            c = emit(c, AST_CONCAT, 0, 0, root, c.ret);
+        root = c.ret;
     }
     if(root == -1)
         c = emit(c, AST_EMPTY, 0, 0, -1, -1);
@@ -471,7 +475,8 @@ static Ctx parse_ere_branch(Ctx c) {
         if(root == -1)
             root = c.ret;
         else
-            c = emit(c, AST_CONCAT, 0, 0, root, c.ret), root = c.ret;
+            c = emit(c, AST_CONCAT, 0, 0, root, c.ret);
+        root = c.ret;
     }
     if(root == -1)
         c = emit(c, AST_EMPTY, 0, 0, -1, -1);
@@ -489,7 +494,8 @@ static Ctx compile_ere(Ctx c) {
         if(root == -1)
             root = c.ret;
         else
-            c = emit(c, AST_ALT, 0, 0, root, c.ret), root = c.ret;
+            c = emit(c, AST_ALT, 0, 0, root, c.ret);
+        root = c.ret;
 
         if(c.pat[c.pos] == '|')
             c.pos++;
@@ -547,7 +553,7 @@ int regcomp(regex_t *preg, const char *pattern, int cflags) {
         cd->pat[i] = pattern[i];
 
     preg->re_comp = cd;
-    preg->re_nsub = c.group_id;
+    preg->re_nsub = ((size_t)(c.group_id));
     preg->re_cflags = cflags;
 
     return 0;

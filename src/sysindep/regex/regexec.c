@@ -63,7 +63,7 @@ static int new_inst(ExecCtx *ex, Opcode op, int v1, int v2, int out1, int out2) 
         return -1;
     if(ex->nfa_len >= ex->nfa_cap) {
         int n = ex->nfa_cap ? ex->nfa_cap * 2 : 64;
-        NfaInst *p = (NfaInst *)realloc(ex->nfa, n * sizeof(NfaInst));
+        NfaInst *p = (NfaInst *)realloc(ex->nfa, (unsigned)n * sizeof(NfaInst));
         if(!p) {
             ex->err = REG_ESPACE;
             return -1;
@@ -152,10 +152,10 @@ static int eval_bracket(ExecCtx *ex, int start, int end, char c) {
             int cstart = p;
             while(ex->pat[p] != type || ex->pat[p + 1] != ']')
                 p++;
-            size_t clen = p - cstart;
+            size_t clen = ((size_t)(p - cstart));
             char buf[256] = {0};
             for(size_t i = 0; i < clen && i < 255; i++)
-                buf[i] = ex->pat[cstart + i];
+                buf[i] = ex->pat[(unsigned)cstart + i];
 
             if(type == ':') {
                 if(strcmp(buf, "alnum") == 0 && isalnum((unsigned char)c))
@@ -198,9 +198,9 @@ static int eval_bracket(ExecCtx *ex, int start, int end, char c) {
             char s_end[2] = {endc, 0};
             char s_c[2] = {c, 0};
             if(ex->cflags & REG_ICASE) {
-                s_start[0] = tolower((unsigned char)s_start[0]);
-                s_end[0] = tolower((unsigned char)s_end[0]);
-                s_c[0] = tolower((unsigned char)s_c[0]);
+                s_start[0] = (char)tolower((unsigned char)s_start[0]);
+                s_end[0] = (char)tolower((unsigned char)s_end[0]);
+                s_c[0] = (char)tolower((unsigned char)s_c[0]);
             }
             if(strcoll(s_start, s_c) <= 0 && strcoll(s_c, s_end) <= 0)
                 match = 1;
@@ -210,8 +210,8 @@ static int eval_bracket(ExecCtx *ex, int start, int end, char c) {
             char check_c = c;
             char check_pat = ex->pat[p];
             if(ex->cflags & REG_ICASE) {
-                check_c = tolower((unsigned char)check_c);
-                check_pat = tolower((unsigned char)check_pat);
+                check_c = (char)tolower((unsigned char)check_c);
+                check_pat = (char)tolower((unsigned char)check_pat);
             }
             if(check_c == check_pat)
                 match = 1;
@@ -229,7 +229,7 @@ static void push_thread(ThreadList *l, int pc, regoff_t *saves, int bref_id, int
     th->pc = pc;
     th->bref_id = bref_id;
     th->bref_offset = bref_offset;
-    th->saves = &l->saves_pool[l->len * nmatch * 2];
+    th->saves = &l->saves_pool[((unsigned)(l->len)) * nmatch * 2];
     for(size_t i = 0; i < nmatch * 2; i++)
         th->saves[i] = saves[i];
     l->len++;
@@ -304,7 +304,9 @@ static void add_thread(ExecCtx *ex, ThreadList *l, int pc, regoff_t *saves, int 
         }
         break;
     }
-    default:
+    case I_CHAR:
+    case I_ANY:
+    case I_BRACKET:
         // Opcodes that consume a character are stored to wait for the next string step
         push_thread(l, pc, saves, bref_id, bref_offset, ex->internal_nmatch);
         break;
@@ -356,17 +358,17 @@ int regexec(const regex_t *preg, const char *string, size_t nmatch, regmatch_t p
     if(ex.err)
         return cleanup(&ex, NULL, NULL, NULL, NULL, ex.err);
 
-    ex.handled = (int *)calloc(ex.nfa_len, sizeof(int));
+    ex.handled = (int *)calloc(((unsigned)(ex.nfa_len)), sizeof(int));
     if(!ex.handled)
         return cleanup(&ex, NULL, NULL, NULL, NULL, REG_ESPACE);
 
     ThreadList clist = {0}, nlist = {0};
     clist.cap = ex.nfa_len;
-    clist.t = (Thread *)malloc(ex.nfa_len * sizeof(Thread));
-    clist.saves_pool = (regoff_t *)malloc(ex.nfa_len * ex.internal_nmatch * 2 * sizeof(regoff_t));
+    clist.t = (Thread *)malloc(((size_t)(ex.nfa_len)) * sizeof(Thread));
+    clist.saves_pool = (regoff_t *)malloc(((size_t)(ex.nfa_len)) * ex.internal_nmatch * 2 * sizeof(regoff_t));
     nlist.cap = ex.nfa_len;
-    nlist.t = (Thread *)malloc(ex.nfa_len * sizeof(Thread));
-    nlist.saves_pool = (regoff_t *)malloc(ex.nfa_len * ex.internal_nmatch * 2 * sizeof(regoff_t));
+    nlist.t = (Thread *)malloc(((size_t)(ex.nfa_len)) * sizeof(Thread));
+    nlist.saves_pool = (regoff_t *)malloc(((size_t)(ex.nfa_len)) * ex.internal_nmatch * 2 * sizeof(regoff_t));
 
     regoff_t *init_saves = (regoff_t *)calloc(ex.internal_nmatch * 2, sizeof(regoff_t));
     regmatch_t *best_m = NULL;
@@ -401,7 +403,7 @@ int regexec(const regex_t *preg, const char *string, size_t nmatch, regmatch_t p
 
         // Prevent integer overflow on handled generation IDs
         if(step_id >= 2000000000) {
-            memset(ex.handled, 0, ex.nfa_len * sizeof(int));
+            memset(ex.handled, 0, ((unsigned)(ex.nfa_len)) * sizeof(int));
             step_id = 1;
         }
 
@@ -430,8 +432,8 @@ int regexec(const regex_t *preg, const char *string, size_t nmatch, regmatch_t p
                         char c1 = c;
                         char c2 = ex.str[b_so + th->bref_offset];
                         if(ex.cflags & REG_ICASE) {
-                            c1 = tolower((unsigned char)c1);
-                            c2 = tolower((unsigned char)c2);
+                            c1 = (char)tolower((unsigned char)c1);
+                            c2 = (char)tolower((unsigned char)c2);
                         }
                         if(c1 == c2) {
                             if(th->bref_offset + 1 == b_len) {
@@ -449,10 +451,10 @@ int regexec(const regex_t *preg, const char *string, size_t nmatch, regmatch_t p
                     int matched = 0;
                     if(inst->op == I_CHAR) {
                         char c1 = c;
-                        char c2 = inst->v1;
+                        char c2 = ((char)(inst->v1));
                         if(ex.cflags & REG_ICASE) {
-                            c1 = tolower((unsigned char)c1);
-                            c2 = tolower((unsigned char)c2);
+                            c1 = (char)tolower((unsigned char)c1);
+                            c2 = (char)tolower((unsigned char)c2);
                         }
                         matched = (c1 == c2);
                     } else if(inst->op == I_ANY) {
