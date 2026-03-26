@@ -1,23 +1,21 @@
 ## Welcome to Small-LibC!
-Small-LibC is an iOS development library, which implements full ANSI C89, some C99 and POSIX functions
+Small-LibC is a small iOS 6 LibC implementation in Public Domain
 
 ## Get started
-If you're on iOS, just run `./make_all.sh`, then you'll be able to use it as libc.a (recommended way for on-device)
+If you're on iOS, just run `./make_all.sh`.
 
 <details>
     <summary>If you're cross-compiling</summary>
-If you're cross-compiling, go to ./src, then `make CROSS=1`. Supported Makefile flags are `SDK`, `ARCHES` (armv7 default, 4t,6,7s permitted, 2+ arches suppirted as `ARCHES=armv7,armv7s`), `CFLAGS`, `CPPFLAGS`. If you have cctools, use Makefile flag `LLVM-PREFIX=""` (default behavior is to call `$(LLVM-PREFIX)$(tool)`)
+If you're cross-compiling, go to ./src, then `make CROSS=1`. Supported Makefile flags are `SDK`, `ARCHES` (armv7 default, 4t,6,7s permitted, 2+ arches supported as `ARCHES=armv7,armv7s`)
 </details>
 
 ## Status
 * Full ANSI C89
 * Full POSIX.1-1990
 * Full POSIX.2-1992
-* Some Mach syscalls implemented with libMach. To compile it (required for stdio), use `./getlibmach.sh`. It's very small.
-* ANSI requires support for "C" locale only, which this library does. You can find Apple `LC_CTYPE` parser at `./src/sysindep/locale/unused`
-* Some C99, POSIX.2008 and GNU extensions are implemented (very partly) – e.g. you can use `%ls` and `%lc`, `snprintf()`, `dprintf()`, `getline()`, and various C99 math functions.
+* POSIX.1b-1993, POSIX.1c-1995 are TODO
 
-Note that LibM and string are git submodules, so run `git submodule update --recursive --init` before compiling (of course, if you need it. if don't, just `touch src/math/dummy.c` and it will pass)
+Note that LibM and string are git submodules, so run `git submodule update --recursive --init` before compiling.
 
 ## License
 This project is a Public Domain and licensed under The Unlicense. Note that 570161d commit and older are MIT-licensed
@@ -26,36 +24,8 @@ This project is a Public Domain and licensed under The Unlicense. Note that 5701
 
 1. `./src` – LibC's source
 2. `./include` – LibC's headers
-3. `./src/sysindep` – Probably system-independent code
-4. `./src/sysdep` – "system-dependent" code: uses inline asm. can be used like `xnu-tree/libsyscall/custom`
-5. `./src/runtime/sysdep` – C Startup code and UBSan runtime
-6. `./src/runtime/sysindep` – stack canary, division runtime
+3. `./src/c` – Code written in C
+4. `./src/asm` – Code written in asm
+5. `./src/runtime/asm` – C Startup code and UBSan runtime
+6. `./src/runtime/c` – stack canary, division runtime
 7. `./src/math` – libM
-
-## Notes
-### Why sysindep is "probably" system-independent?
-
-TL;DL: I'm lazy
-
-Actually, it should be named "c", not "sysindep", but I don't want to change it – I'm too lazy to rewrite Makefile and change `string` submodude path
-
-### Is it compatible?
-
-TL;DR: no, it's not.
-
-(Actually, this library can be used with libSystem if you'll remove `./src/sysindep/stdio` – it's incompatible)
-
-### Is dynamic linking supported?
-
-TL;DR: no
-
-And never be - dyld is complicated as hell. Sorry! T-T
-
-### Is it thread-safe?
-
-TL;DR: partly
-
-`*alloc()`, `free()`, stdio functions are protected with spinlocks.
-
-### Other standarts status & Feature test macro
-We support some feature test macros, such as `_ANSI_SOURCE`, `_XOPEN_SOURCE`, `_POSIX_C_SOURCE`, `_DARWIN_C_SOURCE`, `_GNU_SOURCE`, but only `_POSIX_SOURCE` and `_ANSI_SOURCE` are explicitly supported.

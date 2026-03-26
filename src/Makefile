@@ -7,8 +7,8 @@ TARGET_LIBC = libc.a
 TARGET_LIBRT = librt.a
 TARGET_LIBM = libm.a
 
-GENERIC_SRCS := $(wildcard sysindep/*/*.c sysindep/*/src/*.c)
-SYSDEP_SRCS  := sysdep/syscall.c $(wildcard sysdep/*/*.c sysdep/*.c)
+GENERIC_SRCS := $(wildcard c/*/*.c c/*/src/*.c)
+SYSDEP_SRCS  := asm/syscall.c $(wildcard asm/*/*.c asm/*.c)
 RT_SRCS      := $(wildcard runtime/*/*.c)
 MATH_SRCS    := $(wildcard math/*.c)
 

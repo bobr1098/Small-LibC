@@ -92,6 +92,9 @@
 #  define SYS_mlockall 324
 #  define SYS_munlockall 325
 #  define SYS_getdirentries64 344
+#  define SYS_bsdthread_create 360
+#  define SYS_bsdthread_terminate 361
+#  define SYS_bsdthread_register 366
 
 # endif /* _DARWIN_C_SOURCE */
 
