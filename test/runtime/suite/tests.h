@@ -4,6 +4,8 @@ void __divsi3_test();
 void __fixdfdi_test();
 void _c_startup_test();
 void __fixunsdfdi_test();
+void __floatdidf_test();
+void __floatundidf_test();
 
 void (*tests[])() = {
     _c_startup_test,
@@ -12,6 +14,8 @@ void (*tests[])() = {
     __divsi3_test,
     __fixdfdi_test,
     __fixunsdfdi_test,
+    __floatdidf_test,
+    __floatundidf_test,
     0
 };
 
