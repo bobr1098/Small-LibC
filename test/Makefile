@@ -59,5 +59,6 @@ $(OBJ_DIR)/%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	@printf "\tCLEAN\n"
 	@rm -rf $(OBJ_DIR) $(LIB_OUT_DIR)
 	@rm -f ctest rttest mtest
