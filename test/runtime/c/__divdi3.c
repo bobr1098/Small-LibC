@@ -52,4 +52,14 @@ void __divdi3_test() {
         printf(RED("[FAIL]") " 64bit division rounding to zero\n");
     else
         printf(GREEN("[PASS]") " 64bit division rounding to zero\n");
+
+    if(div(1, 0) != 0)
+        printf(RED("[FAIL]") " 1/0 == 0\n");
+    else
+        printf(GREEN("[PASS]") " 1/0 == 0\n");
+
+    if(div(LLONG_MIN, -1) != LLONG_MIN)
+        printf(RED("[FAIL]") " LLONG_MIN/-1 == LLONG_MIN\n");
+    else
+        printf(GREEN("[PASS]") " LLONG_MIN/-1 == LLONG_MIN\n");
 }

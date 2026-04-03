@@ -1,5 +1,6 @@
 #include "runtime.h"
 #include <limits.h>
+#include <math.h>
 #include <stdio.h>
 
 #define GREEN(txt) "\033[0;32m" txt "\033[0m"
@@ -38,4 +39,9 @@ void __fixdfdi_test() {
         printf(RED("[FAIL]") " (int)(double)(LLONG_MIN) == LLONG_MIN\n");
     else
         printf(GREEN("[PASS]") " (int)(double)(LLONG_MIN) == LLONG_MIN\n");
+
+    if(dfdi(NAN) != 0)
+        printf(RED("[FAIL]") " (int)NAN == 0\n");
+    else
+        printf(GREEN("[PASS]") " (int)NAN == 0\n");
 }
