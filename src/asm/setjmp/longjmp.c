@@ -15,5 +15,4 @@ __asm__(
     "    bl      _sigprocmask\n\t"
     "    mov     r1, r8\n\t"
     "    mov     r0, r6\n\t"
-    "    b       __longjmp\n\t"
-);
+    "    b       __longjmp\n\t");

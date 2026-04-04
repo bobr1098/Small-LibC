@@ -10,5 +10,4 @@ __asm__(
     "    str     r1, [r0, #0x70]\n\t"
     "    cmp     r1, #0\n\t"
     "    beq     __setjmp\n\t"
-    "    b       _setjmp\n\t"
-);
+    "    b       _setjmp\n\t");

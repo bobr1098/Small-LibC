@@ -10,5 +10,4 @@ __asm__(
     "    ldr     r2, [r0, #0x70]\n\t"
     "    cmp     r2, #0\n\t"
     "    beq     __longjmp\n\t"
-    "    b       _longjmp\n\t"
-);
+    "    b       _longjmp\n\t");

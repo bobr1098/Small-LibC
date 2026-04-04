@@ -17,5 +17,4 @@ __asm__(
     "    mov     r0, r8\n\t"
     "    ldr     r8, [r0, #0x10]\n\t"
     "    ldr     lr, [r0, #0x20]\n\t"
-    "    b       __setjmp\n\t"
-);
+    "    b       __setjmp\n\t");

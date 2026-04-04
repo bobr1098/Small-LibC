@@ -12,5 +12,4 @@ __asm__(
     "    vldmia  r0, {d8-d15}\n\t"
     "    movs    r0, r1\n\t"
     "    moveq   r0, #1\n\t"
-    "    bx      lr\n\t"
-);
+    "    bx      lr\n\t");
