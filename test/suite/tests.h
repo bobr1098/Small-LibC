@@ -16,6 +16,9 @@ void _longjmp_test();
 void sigsetjmp_test();
 void siglongjmp_test();
 
+// signal
+void sigaction_test();
+
 // time
 void gettimeofday_test();
 
@@ -36,6 +39,7 @@ void (*tests[])() = {
     _longjmp_test, /* _longjmp() */
     sigsetjmp_test, /* sigsetjmp() */
     siglongjmp_test, /* siglongjmp() */
+    sigaction_test, /* sigaction() */
     gettimeofday_test, /* gettimeofday() */
     abs_test, /* abs() */
     0
