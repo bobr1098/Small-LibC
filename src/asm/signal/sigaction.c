@@ -1,3 +1,4 @@
+#include <errno.h>
 #include <signal.h>
 #include <stddef.h>
 #include <sys/syscall.h>
@@ -44,6 +45,7 @@ int sigaction(int sig, const struct sigaction *act, struct sigaction *oact) {
     int ret;
 
     if(sig <= 0 || sig >= NSIG) {
+        errno = EINVAL;
         return -1;
     }
 
