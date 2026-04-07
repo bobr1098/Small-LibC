@@ -3,7 +3,7 @@
 
 #include <features.h>
 
-# if !defined(_ANSI) && ((defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 200112L) || (defined(_XOPEN_SOURCE) && _XOPEN_SOURCE >= 600) || (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L))
+# if !defined(_ANSI) && ((defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 200112L) || (defined(_XOPEN_SOURCE) && _XOPEN_SOURCE >= 600) || (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199409LL))
 
 #  ifndef __cplusplus /* to suppress errrors */
 #   define and &&
@@ -19,5 +19,5 @@
 #   define xor_eq ^=
 #  endif /* !__cplusplus */
 
-# endif /* !_ANSI && ((_POSIX_C_SOURCE && _POSIX_C_SOURCE >= 200112L) || _XOPEN_SOURCE && _XOPEN_SOURCE >= 600) || (__STDC_VERSION__ && __STDC_VERSION__ >= 199901L)) */
+# endif /* !_ANSI && ((_POSIX_C_SOURCE && _POSIX_C_SOURCE >= 200112L) || _XOPEN_SOURCE && _XOPEN_SOURCE >= 600) || (__STDC_VERSION__ && __STDC_VERSION__ >= 199409L)) */
 #endif /* !ISO646_H */
