@@ -15,7 +15,7 @@ If you're cross-compiling, go to ./src, then `make CROSS=1`. Supported Makefile 
 * Full POSIX.2-1992
 * POSIX.1b-1993, POSIX.1c-1995 are TODO
 
-Note that LibM and string are git submodules, so run `git submodule update --recursive --init` before compiling.
+Note that LibM is a git submodule, so run `git submodule update --recursive --init` before compiling.
 
 ## License
 This project is a Public Domain and licensed under The Unlicense. Note that 570161d commit and older are MIT-licensed

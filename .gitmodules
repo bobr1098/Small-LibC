@@ -1,6 +1,3 @@
-[submodule "src/c/string"]
-	path = src/c/string
-	url = https://github.com/AAlx0451/string
 [submodule "src/math"]
 	path = src/math
 	url = https://github.com/AAlx0451/math
