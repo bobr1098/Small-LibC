@@ -4,17 +4,13 @@
 
 void syscall_test();
 
-// unistd
-void fork_test();
-void pipe_test();
-
 // setjmp
-void setjmp_test();
-void longjmp_test();
-void _setjmp_test();
 void _longjmp_test();
-void sigsetjmp_test();
+void _setjmp_test();
+void longjmp_test();
+void setjmp_test();
 void siglongjmp_test();
+void sigsetjmp_test();
 
 // signal
 void sigaction_test();
@@ -22,39 +18,77 @@ void sigaction_test();
 // time
 void gettimeofday_test();
 
+// unistd
+void fork_test();
+void pipe_test();
+
 /* 
  * c
  */
 
-// string
-void strcat_test();
-void strcpy_test();
-void strncat_test();
-void strncpy_test();
-void strtok_test();
-void strxfrm_test();
-
 // stdlib
 void abs_test();
 
+// string
+void memchr_test();
+void memcmp_test();
+void memcpy_test();
+void memmove_test();
+void memset_test();
+void strcat_test();
+void strchr_test();
+void strcmp_test();
+void strcoll_test();
+void strcpy_test();
+void strcspn_test();
+void strdup_test();
+void strerror_test();
+void strlen_test();
+void strncat_test();
+void strncmp_test();
+void strncpy_test();
+void strpbrk_test();
+void strrchr_test();
+void strspn_test();
+void strstr_test();
+void strtok_test();
+void strxfrm_test();
+
 void (*tests[])() = {
     syscall_test, /* syscall() */
-    fork_test, /* fork() */
-    pipe_test, /* pipe() */
-    setjmp_test, /* setjmp() */
-    longjmp_test, /* longjmp() */
-    _setjmp_test, /* _setjmp() */
     _longjmp_test, /* _longjmp() */
-    sigsetjmp_test, /* sigsetjmp() */
+    _setjmp_test, /* _setjmp() */
+    longjmp_test, /* longjmp() */
+    setjmp_test, /* setjmp() */
     siglongjmp_test, /* siglongjmp() */
+    sigsetjmp_test, /* sigsetjmp() */
     sigaction_test, /* sigaction() */
     gettimeofday_test, /* gettimeofday() */
+    fork_test, /* fork() */
+    pipe_test, /* pipe() */
+    abs_test, /* abs() */
+    memchr_test, /* memchr() */
+    memcmp_test, /* memcmp() */
+    memcpy_test, /* memcpy() */
+    memmove_test, /* memmove() */
+    memset_test, /* memset() */
     strcat_test, /* strcat() */
+    strchr_test, /* strchr() */
+    strcmp_test, /* strcmp() */
+    strcoll_test, /* strcoll() */
     strcpy_test, /* strcpy() */
+    strcspn_test, /* strcspn() */
+    strdup_test, /* strdup() */
+    strerror_test, /* strerror() */
+    strlen_test, /* strlen() */
     strncat_test, /* strncat() */
+    strncmp_test, /* strncmp() */
     strncpy_test, /* strncpy() */
+    strpbrk_test, /* strpbrk() */
+    strrchr_test, /* strrchr() */
+    strspn_test, /* strspn() */
+    strstr_test, /* strstr() */
     strtok_test, /* strtok() */
     strxfrm_test, /* strxfrm() */
-    abs_test, /* abs() */
     0
 };

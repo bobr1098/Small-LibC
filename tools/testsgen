@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+
+while (<STDIN>) {
+    chomp;
+    if (m|^([^/]+)/(?:(.*)/)?([^/.]+)\.c$|) {
+        push @{$tree{$1}{$2 // ""}}, $3;
+    }
+}
+
+foreach my $top (sort keys %tree) {
+    print "/* \n * $top\n */\n\n";
+    foreach my $sub (sort keys %{$tree{$top}}) {
+        print "// $sub\n" if $sub;
+        foreach my $func (@{$tree{$top}{$sub}}) {
+            print "void ${func}_test();\n";
+        }
+        print "\n";
+    }
+}
+
+print "void (*tests[])() = {\n";
+foreach my $top (sort keys %tree) {
+    foreach my $sub (sort keys %{$tree{$top}}) {
+        foreach my $func (@{$tree{$top}{$sub}}) {
+            print "    ${func}_test, /* $func() */\n";
+        }
+    }
+}
+print "    0\n};\n";
