@@ -49,6 +49,7 @@ typedef struct __sFILE {
     size_t _cnt;
     unsigned int _flags;
     volatile int _lock;
+    int _mode;
     struct __sFILE *_next;
 } FILE;
 

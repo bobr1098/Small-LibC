@@ -164,6 +164,7 @@ void __stdio_init(void) {
     _f_stdin._cnt = 0;
     _f_stdin._flags = __S_RD;
     _f_stdin._lock = 0;
+    _f_stdin._mode = 0;
     stdin = &_f_stdin;
 
     _f_stdout._fd = 1;
@@ -173,6 +174,7 @@ void __stdio_init(void) {
     _f_stdout._cnt = BUFSIZ;
     _f_stdout._flags = __S_WR;
     _f_stdout._lock = 0;
+    _f_stdout._mode = 0;
     stdout = &_f_stdout;
 
     _f_stderr._fd = 2;
@@ -182,6 +184,7 @@ void __stdio_init(void) {
     _f_stderr._cnt = 1;
     _f_stderr._flags = __S_WR | __S_NBF;
     _f_stderr._lock = 0;
+    _f_stderr._mode = 0;
     stderr = &_f_stderr;
 
     if(isatty(fileno(stdin))) {
