@@ -26,6 +26,14 @@ void gettimeofday_test();
  * c
  */
 
+// string
+void strcat_test();
+void strcpy_test();
+void strncat_test();
+void strncpy_test();
+void strtok_test();
+void strxfrm_test();
+
 // stdlib
 void abs_test();
 
@@ -41,6 +49,12 @@ void (*tests[])() = {
     siglongjmp_test, /* siglongjmp() */
     sigaction_test, /* sigaction() */
     gettimeofday_test, /* gettimeofday() */
+    strcat_test, /* strcat() */
+    strcpy_test, /* strcpy() */
+    strncat_test, /* strncat() */
+    strncpy_test, /* strncpy() */
+    strtok_test, /* strtok() */
+    strxfrm_test, /* strxfrm() */
     abs_test, /* abs() */
     0
 };
