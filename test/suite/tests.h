@@ -17,6 +17,7 @@ void sigaction_test();
 
 // time
 void gettimeofday_test();
+void asctime_test();
 
 // unistd
 void fork_test();
@@ -90,5 +91,6 @@ void (*tests[])() = {
     strstr_test, /* strstr() */
     strtok_test, /* strtok() */
     strxfrm_test, /* strxfrm() */
+    asctime_test, /* asctime() */
     0
 };
