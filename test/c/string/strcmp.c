@@ -11,22 +11,22 @@ void strcmp_test() {
     char cmpabcd_[] = "abcd\xfc";
     char empty[] = "";
 
-    if (strcmp(abcde, cmpabcde) != 0)
+    if(strcmp(abcde, cmpabcde) != 0)
         printf(RED("[FAIL]") " strcmp returns 0 for identical strings\n");
     else
         printf(GREEN("[PASS]") " strcmp returns 0 for identical strings\n");
 
-    if (strcmp(abcde, abcdx) >= 0 || strcmp(abcdx, abcde) <= 0)
+    if(strcmp(abcde, abcdx) >= 0 || strcmp(abcdx, abcde) <= 0)
         printf(RED("[FAIL]") " strcmp correctly signs inequality\n");
     else
         printf(GREEN("[PASS]") " strcmp correctly signs inequality\n");
 
-    if (strcmp(empty, abcde) >= 0 || strcmp(abcde, empty) <= 0)
+    if(strcmp(empty, abcde) >= 0 || strcmp(abcde, empty) <= 0)
         printf(RED("[FAIL]") " strcmp handles empty strings correctly\n");
     else
         printf(GREEN("[PASS]") " strcmp handles empty strings correctly\n");
 
-    if (strcmp(abcde, cmpabcd_) >= 0)
+    if(strcmp(abcde, cmpabcd_) >= 0)
         printf(RED("[FAIL]") " strcmp uses unsigned character comparison\n");
     else
         printf(GREEN("[PASS]") " strcmp uses unsigned character comparison\n");

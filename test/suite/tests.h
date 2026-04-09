@@ -17,7 +17,6 @@ void sigaction_test();
 
 // time
 void gettimeofday_test();
-void asctime_test();
 
 // unistd
 void fork_test();
@@ -54,6 +53,9 @@ void strspn_test();
 void strstr_test();
 void strtok_test();
 void strxfrm_test();
+
+// time
+void asctime_test();
 
 void (*tests[])() = {
     syscall_test, /* syscall() */
