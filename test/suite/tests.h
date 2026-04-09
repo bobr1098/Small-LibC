@@ -26,6 +26,26 @@ void pipe_test();
  * c
  */
 
+// ctype
+void isalnum_test();
+void isalpha_test();
+void isblank_test();
+void iscntrl_test();
+void isdigit_test();
+void isgraph_test();
+void islower_test();
+void isprint_test();
+void ispunct_test();
+void isspace_test();
+void isupper_test();
+void isxdigit_test();
+void tolower_test();
+void toupper_test();
+
+// locale
+void localeconv_test();
+void setlocale_test();
+
 // stdlib
 void abs_test();
 
@@ -69,6 +89,22 @@ void (*tests[])() = {
     gettimeofday_test, /* gettimeofday() */
     fork_test, /* fork() */
     pipe_test, /* pipe() */
+    isalnum_test, /* isalnum() */
+    isalpha_test, /* isalpha() */
+    isblank_test, /* isblank() */
+    iscntrl_test, /* iscntrl() */
+    isdigit_test, /* isdigit() */
+    isgraph_test, /* isgraph() */
+    islower_test, /* islower() */
+    isprint_test, /* isprint() */
+    ispunct_test, /* ispunct() */
+    isspace_test, /* isspace() */
+    isupper_test, /* isupper() */
+    isxdigit_test, /* isxdigit() */
+    tolower_test, /* tolower() */
+    toupper_test, /* toupper() */
+    localeconv_test, /* localeconv() */
+    setlocale_test, /* setlocale() */
     abs_test, /* abs() */
     memchr_test, /* memchr() */
     memcmp_test, /* memcmp() */
