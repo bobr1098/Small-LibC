@@ -35,7 +35,7 @@ ifeq ($(CROSS), 1)
     OBJS_$(1) := $(patsubst %.c,$(OBJDIR)/$(1)/%.o,$(GENERIC_SRCS) $(SYSDEP_SRCS) $(RT_SRCS) $(MATH_SRCS))
     
     $(OBJDIR)/$(1)/%.o: %.c
-	@echo "  CC   [$(1)] $$<"
+	@echo -e "\tCC\t[$(1)] $$<"
 	@mkdir -p $$(dir $$@)
 	$(Q)$(CC) $(BASE_CFLAGS) -target $(1)-apple-ios6.1 -c $$< -o $$@
 
@@ -44,7 +44,7 @@ ifeq ($(CROSS), 1)
     $(OBJDIR)/$(1)/libm.a: $(patsubst %.c,$(OBJDIR)/$(1)/%.o,$(MATH_SRCS))
 
     $(OBJDIR)/$(1)/%.a:
-	@echo "  AR   [$(1)] $$@"
+	@echo -e "\tAR\t[$(1)] $$@"
 	@mkdir -p $$(dir $$@)
 	$(Q)$(AR) rcs $$@ $$^
 
@@ -56,15 +56,15 @@ ifeq ($(CROSS), 1)
   $(foreach arch,$(ARCH_LIST),$(eval $(call BUILD_ARCH,$(arch))))
 
   $(TARGET_LIBC): $(ARCH_LIBS_C)
-	@echo "  LIPO $@"
+	@echo -e "\tLIPO\t$@"
 	$(Q)$(LIPO) -create -output $@ $^
 
   $(TARGET_LIBRT): $(ARCH_LIBS_RT)
-	@echo "  LIPO $@"
+	@echo -e "\tLIPO\t$@"
 	$(Q)$(LIPO) -create -output $@ $^
 
   $(TARGET_LIBM): $(ARCH_LIBS_M)
-	@echo "  LIPO $@"
+	@echo -e "\tLIPO\t$@"
 	$(Q)$(LIPO) -create -output $@ $^
 
 else
@@ -78,25 +78,25 @@ else
   OBJS_M  = $(patsubst %.c,$(OBJDIR)/%.o,$(MATH_SRCS))
 
   $(OBJDIR)/%.o: %.c
-	@echo "  CC   $<"
+	@echo -e "\tCC\t$<"
 	@mkdir -p $(dir $@)
 	$(Q)$(CC) $(BASE_CFLAGS) -c $< -o $@
 
   $(TARGET_LIBC): $(OBJS_C)
-	@echo "  AR   $@"
+	@echo -e "\tAR\t$@"
 	$(Q)$(AR) rcs $@ $^
 
   $(TARGET_LIBRT): $(OBJS_RT)
-	@echo "  AR   $@"
+	@echo -e "\tAR\t$@"
 	$(Q)$(AR) rcs $@ $^
 
   $(TARGET_LIBM): $(OBJS_M)
-	@echo "  AR   $@"
+	@echo -e "\tAR\t$@"
 	$(Q)$(AR) rcs $@ $^
 endif
 
 clean:
-	@echo "  CLEAN"
+	@echo -e "\tCLEAN"
 	$(Q)rm -rf $(TARGET_LIBC) $(TARGET_LIBRT) $(TARGET_LIBM) $(OBJDIR)
 
 install: all
